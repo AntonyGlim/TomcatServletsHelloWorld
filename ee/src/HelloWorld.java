@@ -26,11 +26,13 @@ public class HelloWorld extends HttpServlet {
         System.out.println("doGet Method");
         System.out.println("Thread: " + Thread.currentThread().getName());
         resp.getWriter().write("Hello World!!!!!!!!!!!+++++++++++");
-        /*Демонстрация потокоопасности*/
-        for (int j = 0; j < 1_000_000; j++) {
-            i++;
+        synchronized (this){
+            /*Демонстрация потокоопасности*/
+            for (int j = 0; j < 1_000_000; j++) {
+                i++;
+            }
+            System.out.println(i);
         }
-        System.out.println(i);
     }
 
     @Override
