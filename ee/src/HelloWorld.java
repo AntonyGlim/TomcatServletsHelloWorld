@@ -14,6 +14,7 @@ import java.net.URLConnection;
 @WebServlet("/hw")
 public class HelloWorld extends HttpServlet {
 
+    int i = 0;
     /*Выполняется единожды при создании сервлета*/
     @Override
     public void init() throws ServletException {
@@ -25,23 +26,11 @@ public class HelloWorld extends HttpServlet {
         System.out.println("doGet Method");
         System.out.println("Thread: " + Thread.currentThread().getName());
         resp.getWriter().write("Hello World!!!!!!!!!!!+++++++++++");
-    }
-
-    /*Создадим и отправим 100 запросов на сервлет*/
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        URLConnection connection = new URL("http://localhost:8081/hw").openConnection();
-                        connection.getInputStream();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
+        /*Демонстрация потокоопасности*/
+        for (int j = 0; j < 1_000_000; j++) {
+            i++;
         }
+        System.out.println(i);
     }
 
     @Override

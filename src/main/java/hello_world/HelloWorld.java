@@ -8,7 +8,7 @@ import java.net.URLConnection;
 public class HelloWorld extends HttpServlet {
     /*Создадим и отправим 100 запросов на сервлет*/
     public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 3; i++) {
             new Thread(){
                 @Override
                 public void run() {
