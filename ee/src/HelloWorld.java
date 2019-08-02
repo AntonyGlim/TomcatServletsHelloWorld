@@ -71,7 +71,7 @@ public class HelloWorld extends HttpServlet {
                 "\t<h1>Hello World!!!!!!!!!!!+++++++++++</h1>\n" +
                 "firstname= " + firstname + "<br>" +
                 "lastname= " + lastname + "<br>" +
-                "\t<form action=\"hw\" method=\"get\">\n" +
+                "\t<form action=\"hw\" method=\"post\">\n" + /*get или post*/
                 "\t\tFirst name:<br>\n" +
                 "\t\t<input type=\"text\" name=\"firstname\"><br>\n" +
                 "\t\tLast name:<br>\n" +
@@ -82,6 +82,7 @@ public class HelloWorld extends HttpServlet {
                 "</html>");
     }
 
+    /*Метод не будет светить данные в адресной строке (пароли)*/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
