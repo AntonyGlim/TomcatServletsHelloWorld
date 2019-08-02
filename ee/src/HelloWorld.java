@@ -33,6 +33,17 @@ public class HelloWorld extends HttpServlet {
             }
             System.out.println(i);
         }
+        //req - отвечает за все что приходит от клиента
+        System.out.println();
+        System.out.println("Работа с параметрами");
+        //Запрос будет иметь вид: http://localhost:8081/hw?name=First&one=1&two=2&two=22&two=222&two=2222&two=22222
+        System.out.println(req.getParameter("name"));
+        System.out.println(req.getParameter("one"));
+        String[] twos = req.getParameterValues("two");
+        for (String two : twos) {
+            System.out.println(two);
+        }
+
     }
 
     @Override
