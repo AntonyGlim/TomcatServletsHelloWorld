@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Enumeration;
 
 /*Сервлет - один экземпляр на все запросы*/
 /*Все запросы обрабатываются в разных потоках он потоко не безопасен*/
@@ -41,9 +42,12 @@ public class HelloWorld extends HttpServlet {
         System.out.println(req.getParameter("one"));
         String[] twos = req.getParameterValues("two");
         for (String two : twos) {
-            System.out.println(two);
+            System.out.println("value: " + two);
         }
-
+        Enumeration<String> parameterNames = req.getParameterNames();//имена всех параметров
+        while (parameterNames.hasMoreElements()){
+            System.out.println("name: " + parameterNames.nextElement());
+        }
     }
 
     @Override
