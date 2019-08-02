@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
+import java.util.Map;
 
 /*Сервлет - один экземпляр на все запросы*/
 /*Все запросы обрабатываются в разных потоках он потоко не безопасен*/
@@ -48,6 +49,14 @@ public class HelloWorld extends HttpServlet {
         while (parameterNames.hasMoreElements()){
             System.out.println("name: " + parameterNames.nextElement());
         }
+        Map<String, String[]> parameterMap = req.getParameterMap();
+        System.out.println(req.getRequestURL());
+        System.out.println(req.getRequestURI());
+        System.out.println(req.getServletPath());
+        System.out.println(req.getRemoteHost());
+        System.out.println(req.getLocalPort());
+
+        System.out.println(req.getQueryString()); //name=First&one=1&two=2&two=22&two=222&two=2222&two=22222
     }
 
     @Override
