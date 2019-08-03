@@ -13,7 +13,7 @@ public class HelloWorld extends HttpServlet {
                 @Override
                 public void run() {
                     try {
-                        URLConnection connection = new URL("http://localhost:8081/hw").openConnection();
+                        URLConnection connection = new URL("http://localhost:8080/hw").openConnection();
                         connection.getInputStream();
                     } catch (IOException e) {
                         e.printStackTrace();
