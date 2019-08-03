@@ -57,27 +57,34 @@ public class HelloWorld extends HttpServlet {
 //        System.out.println(req.getLocalPort());
 //
 //        System.out.println(req.getQueryString()); //name=First&one=1&two=2&two=22&two=222&two=2222&two=22222
+//
+//        String firstname = req.getParameter("firstname");
+//        //защита от XSS атак
+//        firstname = firstname == null ? null : firstname.replaceAll("<", "&lt").replaceAll(">", "&gt");
+//        resp.getWriter().write("<!DOCTYPE html>\n" +
+//                "<html lang=\"ru\">\n" +
+//                "<head>\n" +
+//                "\t<title>Контакты</title>\n" +
+//                "\t<meta charset=\"utf-8\">\n" +
+//                "\t<link href=\"styles/styles.css\" rel=\"stylesheet\">\n" +
+//                "</head>\n" +
+//                "<body>\n" +
+//                "\t<h1>Hello World!!!!!!!!!!!+++++++++++</h1>\n" +
+//                "firstname= " + firstname + "<br>" +
+//                "\t<form action=\"hw\" method=\"post\">\n" + /*get или post*/
+//                "\t\tFirst name:<br>\n" +
+//                "\t\t<textarea name=\"firstname\"></textarea><br>\n" +
+//                "\t\t<input type=\"submit\" name=\"submit\">\n" +
+//                "\t</form>\n" +
+//                "</body>\n" +
+//                "</html>");
 
-        String firstname = req.getParameter("firstname");
-        //защита от XSS атак
-        firstname = firstname == null ? null : firstname.replaceAll("<", "&lt").replaceAll(">", "&gt");
-        resp.getWriter().write("<!DOCTYPE html>\n" +
-                "<html lang=\"ru\">\n" +
-                "<head>\n" +
-                "\t<title>Контакты</title>\n" +
-                "\t<meta charset=\"utf-8\">\n" +
-                "\t<link href=\"styles/styles.css\" rel=\"stylesheet\">\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "\t<h1>Hello World!!!!!!!!!!!+++++++++++</h1>\n" +
-                "firstname= " + firstname + "<br>" +
-                "\t<form action=\"hw\" method=\"post\">\n" + /*get или post*/
-                "\t\tFirst name:<br>\n" +
-                "\t\t<textarea name=\"firstname\"></textarea><br>\n" +
-                "\t\t<input type=\"submit\" name=\"submit\">\n" +
-                "\t</form>\n" +
-                "</body>\n" +
-                "</html>");
+        Enumeration<String> headerNames = req.getHeaderNames();
+        while (headerNames.hasMoreElements()){
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + "= " + req.getHeader(headerName));
+        }
+
     }
 
     /*Метод не будет светить данные в адресной строке (пароли)*/
