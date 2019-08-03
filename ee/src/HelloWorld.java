@@ -2,6 +2,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ public class HelloWorld extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        System.out.println("doGet Method");
 //        System.out.println("Thread: " + Thread.currentThread().getName());
-////        resp.getWriter().write("Hello World!!!!!!!!!!!+++++++++++");
+        resp.getWriter().write("Hello World!!!!!!!!!!!+++++++++++");
 //        synchronized (this){
 //            /*Демонстрация потокоопасности*/
 //            for (int j = 0; j < 1_000_000; j++) {
@@ -81,11 +82,11 @@ public class HelloWorld extends HttpServlet {
 //                "</body>\n" +
 //                "</html>");
 
-        Enumeration<String> headerNames = req.getHeaderNames();
-        while (headerNames.hasMoreElements()){
-            String headerName = headerNames.nextElement();
-            System.out.println(headerName + "= " + req.getHeader(headerName));
-        }
+//        Enumeration<String> headerNames = req.getHeaderNames();
+//        while (headerNames.hasMoreElements()){
+//            String headerName = headerNames.nextElement();
+//            System.out.println(headerName + "= " + req.getHeader(headerName));
+//        }
 
         /*gzip - Архивирует*/
 //        if(req.getHeader("Accept_Encoding").contains("gzip")){
@@ -95,9 +96,23 @@ public class HelloWorld extends HttpServlet {
         /*статус для страницы*/
 //        resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
 //        resp.sendRedirect("/pageAdress"); //перенаправит на страницу можно настроить через сколько секунд нас перекинет на другую страницу
-        resp.setHeader("Refresh", "1");//СТРАНИЦА БУДЕТ ОБНАВЛЯТЬСЯ КАЖДУЮ СЕКУНДУ
-        int i = 0;
-        System.out.println(i++);
+//        resp.setHeader("Refresh", "1");//СТРАНИЦА БУДЕТ ОБНАВЛЯТЬСЯ КАЖДУЮ СЕКУНДУ
+//        int i = 0;
+//        System.out.println(i++);
+
+        /*Создали куку*/
+        Cookie cook = new Cookie("Cooke", "test");
+        resp.addCookie(cook);
+        cook.setMaxAge(5); //через 5 секунд кука удалиться
+        cook.setPath("/onlyThisPageShowCookies.html");
+
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie : cookies) {
+            System.out.println("name: " + cookie.getName());
+            System.out.println("value: " + cookie.getValue());
+        }
+
+
     }
 
     /*Метод не будет светить данные в адресной строке (пароли)*/
