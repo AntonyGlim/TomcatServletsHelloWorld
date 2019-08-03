@@ -1,3 +1,4 @@
+import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -13,7 +14,7 @@ import java.util.zip.GZIPOutputStream;
 
 /*Сервлет - один экземпляр на все запросы*/
 /*Все запросы обрабатываются в разных потоках он потоко не безопасен*/
-@WebServlet("/hw")
+@WebServlet(value = "/hw", asyncSupported = true)
 public class HelloWorld extends HttpServlet {
 
     int i = 0;
@@ -25,9 +26,12 @@ public class HelloWorld extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 //        System.out.println("doGet Method");
 //        System.out.println("Thread: " + Thread.currentThread().getName());
-        resp.getWriter().write("Hello World!!!!!!!!!!!+++++++++++");
+
+        resp.getWriter().write("Hello World!");
+
 //        synchronized (this){
 //            /*Демонстрация потокоопасности*/
 //            for (int j = 0; j < 1_000_000; j++) {
@@ -35,7 +39,9 @@ public class HelloWorld extends HttpServlet {
 //            }
 //            System.out.println(i);
 //        }
+
 //        //req - отвечает за все что приходит от клиента
+
 //        System.out.println();
 //        System.out.println("Работа с параметрами");
 //        //Запрос будет иметь вид: http://localhost:8081/hw?name=First&one=1&two=2&two=22&two=222&two=2222&two=22222
@@ -79,6 +85,7 @@ public class HelloWorld extends HttpServlet {
 //                "</body>\n" +
 //                "</html>");
 
+        /*Headers*/
 //        Enumeration<String> headerNames = req.getHeaderNames();
 //        while (headerNames.hasMoreElements()){
 //            String headerName = headerNames.nextElement();
@@ -90,6 +97,7 @@ public class HelloWorld extends HttpServlet {
 //            PrintWriter printWriter = new PrintWriter(new GZIPOutputStream(resp.getOutputStream()));
 //            printWriter.write("hello world"); /*Теоретически это пошлет в браузер информацию в архиве*/
 //        }
+
         /*статус для страницы*/
 //        resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
 //        resp.sendRedirect("/pageAdress"); //перенаправит на страницу можно настроить через сколько секунд нас перекинет на другую страницу
@@ -110,16 +118,26 @@ public class HelloWorld extends HttpServlet {
 //        }
 
         /*Работа с сессиями*/
-        HttpSession session = req.getSession();
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()){
-            String attributeName = attributeNames.nextElement();
-            System.out.println(attributeName);
-        }
-        session.setAttribute("one", "two");
-        System.out.println(session.getMaxInactiveInterval()); //время жизни сессии
+//        HttpSession session = req.getSession();
+//        Enumeration<String> attributeNames = session.getAttributeNames();
+//        while (attributeNames.hasMoreElements()){
+//            String attributeName = attributeNames.nextElement();
+//            System.out.println(attributeName);
+//        }
+//        session.setAttribute("one", "two");
+//        System.out.println(session.getMaxInactiveInterval()); //время жизни сессии
 
+        /*Асинхронные сервлеты*/
+        AsyncContext asyncContext = req.getAsyncContext();
+        asyncContext.start(new Runnable() {
+            @Override
+            public void run() {
+                //wait event
+            }
+        });
+        asyncContext.complete();
     }
+
 
     /*Метод не будет светить данные в адресной строке (пароли)*/
     @Override
