@@ -2,10 +2,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -101,17 +98,26 @@ public class HelloWorld extends HttpServlet {
 //        System.out.println(i++);
 
         /*Создали куку*/
-        Cookie cook = new Cookie("Cooke", "test");
-        resp.addCookie(cook);
-        cook.setMaxAge(5); //через 5 секунд кука удалиться
-        cook.setPath("/onlyThisPageShowCookies.html");
+//        Cookie cook = new Cookie("Cooke", "test");
+//        resp.addCookie(cook);
+//        cook.setMaxAge(5); //через 5 секунд кука удалиться
+//        cook.setPath("/onlyThisPageShowCookies.html");
+//
+//        Cookie[] cookies = req.getCookies();
+//        for (Cookie cookie : cookies) {
+//            System.out.println("name: " + cookie.getName());
+//            System.out.println("value: " + cookie.getValue());
+//        }
 
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            System.out.println("name: " + cookie.getName());
-            System.out.println("value: " + cookie.getValue());
+        /*Работа с сессиями*/
+        HttpSession session = req.getSession();
+        Enumeration<String> attributeNames = session.getAttributeNames();
+        while (attributeNames.hasMoreElements()){
+            String attributeName = attributeNames.nextElement();
+            System.out.println(attributeName);
         }
-
+        session.setAttribute("one", "two");
+        System.out.println(session.getMaxInactiveInterval()); //время жизни сессии
 
     }
 
