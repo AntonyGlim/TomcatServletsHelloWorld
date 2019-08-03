@@ -88,11 +88,16 @@ public class HelloWorld extends HttpServlet {
         }
 
         /*gzip - Архивирует*/
-        if(req.getHeader("Accept_Encoding").contains("gzip")){
-            PrintWriter printWriter = new PrintWriter(new GZIPOutputStream(resp.getOutputStream()));
-            printWriter.write("hello world"); /*Теоретически это пошлет в браузер информацию в архиве*/
-        }
-
+//        if(req.getHeader("Accept_Encoding").contains("gzip")){
+//            PrintWriter printWriter = new PrintWriter(new GZIPOutputStream(resp.getOutputStream()));
+//            printWriter.write("hello world"); /*Теоретически это пошлет в браузер информацию в архиве*/
+//        }
+        /*статус для страницы*/
+//        resp.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+//        resp.sendRedirect("/pageAdress"); //перенаправит на страницу можно настроить через сколько секунд нас перекинет на другую страницу
+        resp.setHeader("Refresh", "1");//СТРАНИЦА БУДЕТ ОБНАВЛЯТЬСЯ КАЖДУЮ СЕКУНДУ
+        int i = 0;
+        System.out.println(i++);
     }
 
     /*Метод не будет светить данные в адресной строке (пароли)*/
