@@ -14,6 +14,7 @@ import java.util.zip.GZIPOutputStream;
 
 /*Сервлет - один экземпляр на все запросы*/
 /*Все запросы обрабатываются в разных потоках он потоко не безопасен*/
+/*src: https://www.youtube.com/playlist?list=PL786bPIlqEjRVDNpxzgLv9iMmB4y5kMfT*/
 @WebServlet(value = "/hw", asyncSupported = true)
 public class HelloWorld extends HttpServlet {
 
