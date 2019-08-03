@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 /*Сервлет - один экземпляр на все запросы*/
 /*Все запросы обрабатываются в разных потоках он потоко не безопасен*/
@@ -83,6 +85,12 @@ public class HelloWorld extends HttpServlet {
         while (headerNames.hasMoreElements()){
             String headerName = headerNames.nextElement();
             System.out.println(headerName + "= " + req.getHeader(headerName));
+        }
+
+        /*gzip - Архивирует*/
+        if(req.getHeader("Accept_Encoding").contains("gzip")){
+            PrintWriter printWriter = new PrintWriter(new GZIPOutputStream(resp.getOutputStream()));
+            printWriter.write("hello world"); /*Теоретически это пошлет в браузер информацию в архиве*/
         }
 
     }
